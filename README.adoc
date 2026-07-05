@@ -1,3 +1,3 @@
-= xfce-dev
+= xfce-nix
 
 Package derivations and overlays for Xfce's development packages.
