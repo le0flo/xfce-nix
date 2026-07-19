@@ -1,0 +1,12 @@
+diff --git a/libxfsm/Makefile.am b/libxfsm/Makefile.am
+index 0148f3d..4dca06f 100644
+--- a/libxfsm/Makefile.am
++++ b/libxfsm/Makefile.am
+@@ -9,6 +9,7 @@ libxfsm_la_SOURCES =                    \
+ libxfsm_la_CFLAGS =							\
+ 	$(LIBXFCE4UI_CFLAGS)                    \
+ 	$(LIBXFCE4UTIL_CFLAGS)                  \
++	$(GTK_CFLAGS)                           \
+ 	$(XFCONF_CFLAGS)
+ 
+ if HAVE_OS_CYGWIN
