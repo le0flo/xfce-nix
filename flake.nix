@@ -18,7 +18,9 @@
       (builtins.attrNames (builtins.readDir ./pkgs))
       (name: callPackage system ./pkgs/${name}/package.nix {});
   in {
-    packages = perSystem (system: customPkgs system);
+    packages = perSystem (system: {
+                 xfwl4-debug = callPackage system ./pkgs/xfwl4/package.nix { buildType = "debug"; };
+               } // (customPkgs system));
 
     overlays = perSystem (system: final: prev: customPkgs system);
   };

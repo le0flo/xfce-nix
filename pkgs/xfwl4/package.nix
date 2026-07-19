@@ -1,5 +1,6 @@
 {
   rustPlatform,
+  buildType ? "release",
   fetchFromGitLab,
   gettext,
   pkg-config,
