@@ -20,34 +20,11 @@
 
     overlays = perSystem (system: final: prev: customPkgs system);
 
-    devShells = perSystem (system: let
-      shellPkgs = (pkgs system).extend self.overlays.${system};
-    in {
-      xfwl4-dev = shellPkgs.mkShell {
-        packages = with shellPkgs; [
-          gettext
-          pkg-config
-          meson
-          xwayland
-          cargo
-          rustc
-        ];
-
-        buildInputs = with shellPkgs; [
-          libdisplay-info
-          libdrm
-          libgbm
-          gtk3
-          libinput
-          pixman
-          seatd
-          udev
-          libxfce4ui
-          xfconf
-          libxkbcommon
-        ];
-      };
-    });
+    devShells = perSystem (system: nixpkgs.lib.genAttrs
+      (builtins.filter
+        (name: builtins.pathExists ./pkgs/${name}/shell.nix)
+        (builtins.attrNames (builtins.readDir ./pkgs)))
+      (name: callPackage system ./pkgs/${name}/shell.nix { pkgs = (pkgs system).extend self.overlays.${system}; }));
   };
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
