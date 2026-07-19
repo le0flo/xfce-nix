@@ -22,7 +22,7 @@
 }:
 
 stdenv.mkDerivation (finalAttrs: {
-  pname = "xfce-nix";
+  pname = "xfce-session";
   version = "4.20.4";
 
   src = fetchFromGitLab {
