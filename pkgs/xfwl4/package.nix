@@ -17,6 +17,9 @@
   xfconf,
   libxkbcommon,
   xwayland,
+  makeWrapper,
+  wayland,
+  libglvnd,
   lib,
 }:
 
@@ -40,6 +43,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     pkg-config
     meson
     xwayland
+    makeWrapper
   ];
 
   buildInputs = [
@@ -54,11 +58,18 @@ rustPlatform.buildRustPackage (finalAttrs: {
     libxfce4ui
     xfconf
     libxkbcommon
+    wayland
+    libglvnd
   ];
 
   strictDeps = true;
 
   enableParallelBuilding = true;
+
+  postFixup = ''
+    wrapProgram $out/bin/xfwl4 \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ wayland libglvnd ]}
+  '';
 
   meta = {
     description = "Xfce's Wayland Compositor";
